@@ -1,0 +1,58 @@
+ext {
+    plugins = [
+            application: 'com.android.application',
+            library    : 'com.android.library',
+            maven      : 'com.github.dcendents.android-maven',
+            bintray    : 'com.jfrog.bintray'
+    ]
+
+    android = [
+            applicationId    : "com.hehuelet.statusbarutils",
+            compileSdkVersion: 25,
+            buildToolsVersion: "25.0.3",
+            minSdkVersion    : 15,
+            targetSdkVersion : 25,
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+
+    mavenpush = [
+            // library
+            version       : "0.0.1",
+
+            siteUrl       : 'https://github.com/hehuelet',
+            gitUrl        : 'https://github.com/hehuelet',
+            issueUrl      : 'https://github.com/hehuelet',
+
+            group         : "com.hehuelet",
+
+            // lib project
+            packaging     : 'aar',
+            name          : 'statusbar',  //maven库名字
+            description   : 'statusbar for Android', //介绍
+
+            // project.license
+            licenseName   : 'The Apache Software License, Version 2.0',
+            licenseUrl    : 'http://www.apache.org/licenses/LICENSE-2.0.txt',
+
+            // project.developers  随意填
+            developerId   : 'hehuelet',
+            developerName : 'hehuelet',
+            developerEmail: 'hehuelet@gmail.com',
+
+            // bintray
+            binrayLibrary : "statusbar",
+            bintrayRepo   : "maven",                     //跟上面创建的Maven仓库名字保持一致
+            bintrayRepoUrl: "https://dl.bintray.com/hehuelet/maven",     //maven仓库地址
+            bintrayUser   : 'hehuelet',                  //bintray账号
+            bintrayLicense: "Apache-2.0"
+    ]
+
+
+    dependencies = [
+            // library.
+            appCompat     : 'com.android.support:appcompat-v7:25.3.1',
+            design        : 'com.android.support:design:25.3.1',
+            statusbarutils: 'com.hehuelet:statusbarutils:0.0.1',
+    ]
+}

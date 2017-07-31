@@ -1,0 +1,94 @@
+apply plugin: rootProject.ext.plugins.maven
+apply plugin: rootProject.ext.plugins.bintray
+
+// 根节点添加
+version = rootProject.ext.mavenpush.version                          // #CONFIG# // project version
+
+// 根节点添加
+group = rootProject.ext.mavenpush.group
+
+// 根节点添加
+def siteUrl = rootProject.ext.mavenpush.siteUrl     // project homepage
+def gitUrl = rootProject.ext.mavenpush.gitUrl       // project git
+def issueUrl = rootProject.ext.mavenpush.issueUrl   // issue git
+
+// 根节点添加
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging rootProject.ext.mavenpush.packaging
+                name rootProject.ext.mavenpush.name
+                description rootProject.ext.mavenpush.description
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name rootProject.ext.mavenpush.licenseName
+                        url rootProject.ext.mavenpush.licenseUrl
+                    }
+                }
+                developers {
+                    developer { //填写的一些基本信息
+                        id rootProject.ext.mavenpush.developerId
+                        name rootProject.ext.mavenpush.developerName
+                        email rootProject.ext.mavenpush.developerEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    options.encoding "UTF-8"
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+//配置bintray参数
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = rootProject.ext.mavenpush.bintrayUser
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = rootProject.ext.mavenpush.bintrayRepo                   //跟上面创建的Maven仓库名字保持一致
+        name = rootProject.ext.mavenpush.binrayLibrary                 //发布到JCenter上的项目名字
+        userOrg = rootProject.ext.mavenpush.bintrayUser
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        issueTrackerUrl = issueUrl
+        licenses = [rootProject.ext.mavenpush.bintrayLicense]
+        labels = ['Android']  //标签
+        publish = true
+        publicDownloadNumbers = true
+
+    }
+}
