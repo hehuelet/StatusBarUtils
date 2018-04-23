@@ -8,17 +8,17 @@ ext {
 
     android = [
             applicationId    : "com.hehuelet.statusbarutils",
-            compileSdkVersion: 25,
-            buildToolsVersion: "25.0.3",
+            compileSdkVersion: 27,
+            buildToolsVersion: "27.0.3",
             minSdkVersion    : 15,
-            targetSdkVersion : 25,
+            targetSdkVersion : 27,
             versionCode      : 1,
             versionName      : "1.0"
     ]
 
     mavenpush = [
             // library
-            version       : "0.0.1",
+            version       : "0.0.3",
 
             siteUrl       : 'https://github.com/hehuelet/StatusBarUtils.git',
             gitUrl        : 'git@github.com:hehuelet/StatusBarUtils.git',
@@ -51,8 +51,8 @@ ext {
 
     dependencies = [
             // library.
-            appCompat     : 'com.android.support:appcompat-v7:25.3.1',
-            design        : 'com.android.support:design:25.3.1',
-            statusbarutils: 'com.hehuelet:statusbarutils:0.0.1',
+            appCompat     : 'com.android.support:appcompat-v7:27.0.3',
+            design        : 'com.android.support:design:27.0.3',
+            statusbarutils: 'com.hehuelet:statusbarutils:0.0.3',
     ]
 }
